@@ -128,3 +128,47 @@ print(foo)
 
 
 ```
+
+fastAPI:
+
+```
+from fastapi import FastAPI
+from fastapi.responses import HTMLResponse
+import  redis
+import  sys
+
+app = FastAPI()
+
+
+@app.get("/")
+async def home():
+    data = {
+        "text": "hi"
+    }
+    return {"data": data}
+
+
+@app.get("/page/{page_name}")
+async def page(page_name: str):
+    data = {
+        "page": page_name
+    }
+    return {"data": data}
+
+@app.get("/search/{pattern}")
+def scan_srch(pattern):
+        r = redis.StrictRedis(host='localhost', port=6379, db=0)
+
+        count = 0
+        foo=[]
+        for key in r.scan_iter(match=pattern,count=100):
+            count += 1
+            print(key)
+            foo.append(key)
+        print(count)
+       # print(list)
+        return {"list" : list}
+
+```
+
+
