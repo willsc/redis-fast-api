@@ -103,3 +103,28 @@ if __name__ == "__main__":
 
 ```
 
+```
+#!/usr/local/bin/python3
+
+
+import redis
+import sys
+
+def scan_srch(pattern):
+        r = redis.StrictRedis(host='localhost', port=6379, db=0)
+
+        count = 0
+        foo=[]
+        for key in r.scan_iter(match=pattern,count=100):
+            count += 1
+            print(key)
+            foo.append(key)
+        print(count)
+       # print(list)
+        return list
+
+foo=scan_srch('*7*')
+print(foo)
+
+
+```
